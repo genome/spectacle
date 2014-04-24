@@ -1,0 +1,24 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  timeout: 5000
+  host: <%= ENV['TGI_POSTGRES_HOST'] %>
+  database: <%= ENV['TGI_POSTGRES_DB'] %>
+  username: <%= ENV['TGI_POSTGRES_USER'] %>
+  password: <%= ENV['TGI_POSTGRES_PASSWORD'] %>
+
+development:
+  <<: *default
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  database: spectacle_test
+  <% if ENV['TRAVIS_BUILD'] %>
+  username: postgres
+  <% end %>
+
+production:
+  <<: *default
