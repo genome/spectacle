@@ -1,0 +1,13 @@
+%ul.nav.nav-pills
+  - active = 'active'
+  - config_files.each do |(file, _)|
+    %li{class: active}
+      %a{href: "##{file}", data: {toggle: 'tab'}}= file
+    - active = ''
+
+.tab-content
+  - active = 'active'
+  - config_files.each do |(file, contents)|
+    .tab-pane{id: file, class: active}
+      - active = ''
+      = contents

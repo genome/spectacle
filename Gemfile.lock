@@ -206,6 +206,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   capybara
+  coderay
   coffee-rails (~> 4.0.0)
   coveralls
   database_cleaner

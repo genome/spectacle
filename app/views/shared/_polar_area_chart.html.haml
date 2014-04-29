@@ -1,0 +1,20 @@
+%canvas{id: chart.chart_id}
+%ul.list-inline
+  - chart.items.each do |item|
+    %li
+      %div{style: "width:40px;height:20px;background-color:#{item.color}"}
+      = item.name
+      = "(#{item.value})"
+
+
+:javascript
+  var elem = document.getElementById('#{chart.chart_id}');
+  var parentElem = elem.parentElement;
+  var styleObj = window.getComputedStyle(parentElem, null);
+  var paddingLeft = parseInt(styleObj.getPropertyValue('padding-left'));
+  var paddingRight = parseInt(styleObj.getPropertyValue('padding-right'));
+  elem.width = parentElem.clientWidth - paddingLeft - paddingRight;
+  elem.height = elem.width * 0.5;
+  var ctx = elem.getContext("2d");
+  var chart = new Chart(ctx);
+  chart.Doughnut(#{chart.data}, #{chart.options});

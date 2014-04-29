@@ -1,0 +1,49 @@
+.row
+  .container-fluid
+    .row
+      .col-md-10.col-md-offset-1
+        %h1.page-header
+          = @analysis_project.name
+    .row
+      .col-md-10.col-md-offset-1
+        %h4 Project Information
+        .well
+          .col-md-6
+            %dl.dl-horizontal
+              %dt Status
+              %dd= @analysis_project.status
+              %br
+              %dt Instrument Data
+              %dd= @instrument_data_chart.total_items
+              %br
+              %dt Models:
+              %dd= @model_status_chart.total_items
+          .col-md-6
+            %dl.dl-horizontal
+              %dt Expected Model Types:
+              %dd
+                %ul.list-unstyled
+                  -@config_presenter.expected_models.each do |model_type|
+                    %li=model_type
+    .row
+      .col-md-10.col-md-offset-1
+        .col-md-4
+          %h4 Instrument Data
+          .well
+            = render partial: 'shared/polar_area_chart', locals: { chart: @instrument_data_chart }
+        .col-md-4
+          %h4 Models By Type
+          .well
+            = render partial: 'shared/polar_area_chart', locals: { chart: @model_type_chart }
+        .col-md-4
+          %h4 Models By Status
+          .well
+            = render partial: 'shared/polar_area_chart', locals: { chart: @model_status_chart }
+    .row
+      .col-md-10.col-md-offset-1
+        %h4 Project Configuration
+        = render partial: 'shared/config_files', locals: {config_files: @config_presenter.config_files_markup }
+    .row
+      %br
+
+
