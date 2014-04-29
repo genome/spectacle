@@ -1,6 +1,6 @@
 class AnalysisProjectsController < ApplicationController
   def overview
-    @analysis_project = AnalysisProject.find(params[:id])
+    @analysis_project = AnalysisProject.where(id: params[:id]).first!
     inst_data_bridges = @analysis_project.instrument_data_analysis_project_bridges
       .select('status, count(instrument_data_analysis_project_bridge.id) as count')
       .group('status')
