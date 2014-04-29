@@ -5,13 +5,9 @@ class ModelTypeChart < DoughnutChart
 
   private
   def get_chart_items(data_items)
-    data_items.map { |item| ChartItem.new(item.subclass_name, item.count, "33CC33") }
+    data_items.each_with_index.map { |item,index| ChartItem.new(item.subclass_name, item.count, @@color_list[index] || '#666666') }
   end
 
-  @@color_map = {
-    'Failed'          => '#FF0000',
-    'Succeeded'       => '#33CC33',
-    'Buildless'       => '#3366FF',
-    'Build Requested' => '#FFFF00',
-  }
+
+
 end

@@ -6,14 +6,17 @@ class ModelStatusChart < DoughnutChart
   private
   def get_chart_items(data_items)
     data_items.group_by { |i| i['status'] }
-      .map { |status, items| ChartItem.new(status, items.count, @@color_map[status]) }
+      .map { |status, items| ChartItem.new(status, items.count, @@status_list[status]) }
   end
 
-  @@color_map = {
-    'Failed'          => '#FF0000',
-    'Succeeded'       => '#33CC33',
-    'Buildless'       => '#3366FF',
-    'Build Requested' => '#FFFF00',
-    'Unstartable'     => '#000000',
-  }
+  @@status_list = color_map([
+    'Failed',
+    'Succeeded',
+    'Buildless',
+    'Running',
+    'Unstartable',
+    'Build Requested',
+    'Scheduled'
+  ])
+
 end

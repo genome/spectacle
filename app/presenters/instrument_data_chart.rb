@@ -6,14 +6,15 @@ class InstrumentDataChart < DoughnutChart
   private
   def get_chart_items(data_items)
     data_items.map do |i|
-      ChartItem.new(i.status, i.count, @@color_map[i.status])
+      ChartItem.new(i.status, i.count, @@status_list[i.status])
     end
   end
 
-  @@color_map = {
-    'new'       => '#3366FF',
-    'failed'    => '#FF0000',
-    'skipped'   => '#FFFF00',
-    'processed' => '#33CC33',
-  }
+  @@status_list = color_map([
+    'failed',
+    'processed',
+    'new',
+    'skipped'
+  ])
+
 end
