@@ -30,15 +30,15 @@
         .col-md-4
           %h4 Instrument Data
           .well
-            = render partial: 'shared/polar_area_chart', locals: { chart: @instrument_data_chart }
+            = render partial: 'shared/doughnut_chart', locals: { chart: @instrument_data_chart }
         .col-md-4
           %h4 Models By Type
           .well
-            = render partial: 'shared/polar_area_chart', locals: { chart: @model_type_chart }
+            = render partial: 'shared/doughnut_chart', locals: { chart: @model_type_chart }
         .col-md-4
           %h4 Models By Status
           .well
-            = render partial: 'shared/polar_area_chart', locals: { chart: @model_status_chart }
+            = render partial: 'shared/doughnut_chart', locals: { chart: @model_status_chart }
     .row
       .col-md-10.col-md-offset-1
         %h4 Project Configuration
