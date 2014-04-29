@@ -1,4 +1,4 @@
-class ModelTypeChart < PolarAreaChart
+class ModelTypeChart < DoughnutChart
   def initialize(data_items)
     super('Model Type', get_chart_items(data_items))
   end

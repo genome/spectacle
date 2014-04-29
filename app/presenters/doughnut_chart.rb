@@ -1,4 +1,4 @@
-class PolarAreaChart
+class DoughnutChart
   attr_reader :name
   attr_reader :items
 

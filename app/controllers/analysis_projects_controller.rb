@@ -12,8 +12,8 @@ class AnalysisProjectsController < ApplicationController
       .group('model.subclass_name')
 
     @model_type_chart      = ModelTypeChart.new(model_types)
-    @model_status_chart    = ModelStatusAreaChart.new(statuses)
+    @model_status_chart    = ModelStatusChart.new(statuses)
     @config_presenter      = AnalysisProjectConfigPresenter.new(@analysis_project)
-    @instrument_data_chart = InstrumentDataAreaChart.new(inst_data_bridges)
+    @instrument_data_chart = InstrumentDataChart.new(inst_data_bridges)
   end
 end

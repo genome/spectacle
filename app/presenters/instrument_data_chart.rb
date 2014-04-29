@@ -1,4 +1,4 @@
-class InstrumentDataAreaChart < PolarAreaChart
+class InstrumentDataChart < DoughnutChart
   def initialize(data_items)
     super('Instrument Data Status', get_chart_items(data_items))
   end

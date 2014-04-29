@@ -1,4 +1,4 @@
-class ModelStatusAreaChart < PolarAreaChart
+class ModelStatusChart < DoughnutChart
   def initialize(data_items)
     super('Model Status', get_chart_items(data_items))
   end
