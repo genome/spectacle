@@ -12,7 +12,7 @@ gem 'jquery-rails'
 gem "less-rails"
 gem "twitter-bootstrap-rails", github: 'seyhunak/twitter-bootstrap-rails', branch: 'bootstrap3'
 gem 'jbuilder', '~> 2.0'
-gem 'coderay'
+gem 'rouge'
 
 group :doc do
   gem 'sdoc', '~> 0.4.0', require: false
