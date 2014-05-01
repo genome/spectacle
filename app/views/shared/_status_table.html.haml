@@ -1,0 +1,15 @@
+%table.table.table-striped
+  %thead
+    %tr
+      %th ID
+      %th Status
+      %th Name
+  %tbody
+  - table.items.each do |item|
+    %tr
+      %td
+        = item.id
+      %td.text-center
+        = item.status
+      %td
+        = item.name

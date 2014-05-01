@@ -23,4 +23,8 @@
           .well
             = render partial: 'shared/doughnut_chart', locals: {chart: @model_status_chart }
     .row
+      .col-md-10.col-md-offset-1
+        .well
+          = render partial: 'shared/status_table', locals: {table: @model_status_table }
+    .row
       %br
