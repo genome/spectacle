@@ -1,6 +1,8 @@
 class ModelsController < ApplicationController
   def overview
     @models = Model.where(id: params[:ids].split('/'))
+    raise ActiveRecord::RecordNotFound unless @models.any?
+
     model_ids = @models.map { |model| model.id }
     statuses = ModelStatusQuery.new(model_ids).execute
     model_types = @models
