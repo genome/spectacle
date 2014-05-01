@@ -1,0 +1,26 @@
+.row
+  .container-fluid
+    .row
+      .col-md-10.col-md-offset-1
+        %h1.page-header Models
+    .row
+      .col-md-10.col-md-offset-1
+        .well
+          .col-md-6
+            %dl.dl-horizontal
+              %dt Models:
+              %dd
+                = @model_status_chart.total_items
+          .clearfix
+    .row
+      .col-md-10.col-md-offset-1
+        .col-md-4
+          %h4 Models By Type
+          .well
+            = render partial: 'shared/doughnut_chart', locals: { chart: @model_type_chart }
+        .col-md-4
+          %h4 Models By Status
+          .well
+            = render partial: 'shared/doughnut_chart', locals: {chart: @model_status_chart }
+    .row
+      %br
