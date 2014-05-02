@@ -46,5 +46,9 @@
         = render partial: 'shared/config_files', locals: {config_files: @config_presenter.config_files_markup }
     .row
       %br
-
+    .row
+      .col-md-10.col-md-offset-1
+        %h4 Timeline Events
+        .well
+          = render partial: 'shared/timeline_events', locals: {timeline_events: @analysis_project.timeline_events.order("updated_at DESC").limit(10) }
 
