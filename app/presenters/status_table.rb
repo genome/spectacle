@@ -8,5 +8,5 @@ class StatusTable
   end
 end
 
-class StatusTableItem < Struct.new(:id, :name, :uri, :status)
+class StatusTableItem < Struct.new(:id, :name, :status, :uri)
 end

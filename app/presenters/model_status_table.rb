@@ -9,7 +9,7 @@ class ModelStatusTable < StatusTable
   private
   def get_table_items(models_with_status)
     models_with_status.map do |id, data|
-      StatusTableItem.new(id, data[:model].name, model_status_path(id: id), data[:status])
+      StatusTableItem.new(id, data[:model].name, data[:status], model_status_path(id: id))
     end
   end
 end
