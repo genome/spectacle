@@ -6,8 +6,8 @@ class InstrumentDataChart < DoughnutChart
   private
   def get_chart_items(data_items)
     data_items.map do |i|
-      ChartItem.new(i.status, i.count, @@status_list[i.status])
-    end
+      ChartItem.new(i.status, i.count, @@status_list[i.status], '#')
+    end #TODO fill in URI
   end
 
   @@status_list = color_map([

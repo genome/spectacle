@@ -57,7 +57,7 @@ class DoughnutChart
   end
 end
 
-class ChartItem < Struct.new(:name, :value, :color)
+class ChartItem < Struct.new(:name, :value, :color, :uri)
   def to_chart_item
     {
       value: value,

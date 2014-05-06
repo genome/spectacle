@@ -7,12 +7,10 @@ class AnalysisProjectsController < ApplicationController
 
     model_ids = @analysis_project.analysis_project_model_bridges.pluck(:model_id)
     statuses = ModelStatusQuery.new(model_ids).execute
-    model_types = @analysis_project.models
-      .select('model.subclass_name', 'count(model.id) as count')
-      .group('model.subclass_name')
+    models_by_type = @analysis_project.models.group_by(&:subclass_name)
 
-    @model_type_chart      = ModelTypeChart.new(model_types)
-    @model_status_chart    = ModelStatusChart.new(statuses)
+    @model_type_chart      = ModelTypeChart.new(models_by_type, view_context)
+    @model_status_chart    = ModelStatusChart.new(statuses, view_context)
     @config_presenter      = AnalysisProjectConfigPresenter.new(@analysis_project)
     @instrument_data_chart = InstrumentDataChart.new(inst_data_bridges)
   end

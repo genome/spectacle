@@ -5,11 +5,10 @@ class ModelsController < ApplicationController
 
     model_ids = @models.map { |model| model.id }
     statuses = ModelStatusQuery.new(model_ids).execute
-    model_types = @models
-      .select('model.subclass_name', 'count(model.id) as count')
-      .group('model.subclass_name')
-    @model_type_chart      = ModelTypeChart.new(model_types)
-    @model_status_chart    = ModelStatusChart.new(statuses)
+    models_by_type = @models.group_by(&:subclass_name)
+
+    @model_type_chart      = ModelTypeChart.new(models_by_type, view_context)
+    @model_status_chart    = ModelStatusChart.new(statuses, view_context)
 
     models_with_status = statuses.each_with_object(@models.each_with_object({}) do |item, hash|
       hash[item.id] = { model: item }
