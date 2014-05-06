@@ -1,3 +1,5 @@
+BetterErrors::Middleware.allow_ip!('10.0.108.0/24')
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
