@@ -8,4 +8,8 @@ class Model < ActiveRecord::Base
 
   def status
   end
+
+  def self.with_statuses_scope
+    eager_load(builds: [:master_event])
+  end
 end

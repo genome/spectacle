@@ -8,7 +8,7 @@
   - table.items.each do |item|
     %tr
       %td
-        = item.id
+        = link_to(item.id, item.uri)
       %td.text-center
         = item.status
       %td

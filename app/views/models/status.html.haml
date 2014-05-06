@@ -1,0 +1,20 @@
+.row
+  .container-fluid
+    .row
+      .col-md-10.col-md-offset-1
+        %h1.page-header
+          Model
+          %span
+            = @model.name
+    .row
+      .col-md-10.col-md-offset-1
+        .col-md-4
+          %h4 Builds By Status
+          .well
+            = render partial: 'shared/doughnut_chart', locals: {chart: @build_status_chart }
+    .row
+      .col-md-10.col-md-offset-1
+        .well
+          = render partial: 'shared/status_table', locals: {table: @build_status_table }
+    .row
+      %br

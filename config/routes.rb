@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   # root 'welcome#index'
 
   get 'analysis_projects/:id' => 'analysis_projects#overview'
+  get 'models/:id' => 'models#status', as: 'model_status'
   get 'models/*ids' => 'models#overview'
 
   # Example of regular route:

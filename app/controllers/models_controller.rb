@@ -17,6 +17,14 @@ class ModelsController < ApplicationController
       hash[status['model_id']][:status] = status['status']
     end
 
-    @model_status_table    = ModelStatusTable.new(models_with_status)
+    @model_status_table    = ModelStatusTable.new(models_with_status, view_context())
+  end
+
+  def status
+    @model = Model.with_statuses_scope.where(id: params[:id]).first!
+    builds = @model.builds
+
+    @build_status_chart    = BuildStatusChart.new(builds)
+    @build_status_table    = BuildStatusTable.new(builds)
   end
 end
