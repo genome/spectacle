@@ -1,4 +1,6 @@
 %ul
   - timeline_events.each do |timeline_event|
     %li
-      = [timeline_event.name.sub(/_/, ' ').capitalize, timeline_event.reason, timeline_event.updated_at].join(' ')
+      %h5
+        = timeline_event.updated_at
+      = [timeline_event.name.sub(/_/, ' ').capitalize, timeline_event.reason].join(': ')
