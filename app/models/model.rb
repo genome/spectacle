@@ -10,6 +10,6 @@ class Model < ActiveRecord::Base
   end
 
   def self.with_statuses_scope
-    eager_load(builds: [:master_event])
+    eager_load([:builds])
   end
 end
