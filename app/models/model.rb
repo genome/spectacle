@@ -5,6 +5,8 @@ class Model < ActiveRecord::Base
   has_many :events
   has_many :analysis_project_model_bridges
   has_many :analysis_projects, through: :analysis_project_model_bridges
+  has_many :model_group_bridges
+  has_many :model_groups, through: :model_group_bridges
 
   def status
   end
