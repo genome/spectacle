@@ -23,15 +23,15 @@ class ModelStatusQuery
         END AS status,
         model.genome_model_id AS model_id
       FROM model.model model
-      LEFT JOIN (SELECT model_id, MAX(date_scheduled) AS date_scheduled
-                  FROM model.build
-                  WHERE status != 'Abandoned'
-                    AND #{first_in_clause}
-                  GROUP BY model_id) date_scheduled
-        ON model.genome_model_id = date_scheduled.model_id
-      LEFT JOIN model.build build ON model.genome_model_id = build.model_id
-        AND date_scheduled.date_scheduled = build.date_scheduled
-      WHERE #{second_in_clause};
+      LEFT JOIN (
+         SELECT ROW_NUMBER() OVER (PARTITION BY model_id ORDER BY date_scheduled DESC) AS r, model_id, status
+         FROM model.build
+         WHERE status != 'Abandoned'
+         AND #{first_in_clause}
+      ) build
+        ON model.genome_model_id = build.model_id
+      WHERE #{second_in_clause}
+      AND (build.r = 1 OR build.r IS NULL);
     }
   end
 end
