@@ -8,8 +8,8 @@ class ModelsController < ApplicationController
       @models = @models.joins(:analysis_project_model_bridges).where(analysis_project_model_bridge: { analysis_project_id: params[:analysis_project_id] })
     end
     unless params[:status].blank?
-      if params[:analysis_project_id].blank?
-        return render text: "Query by status requires an analysis project!", status: 400
+      if params[:analysis_project_id].blank? and params[:id].blank?
+        return render text: "Query by status requires additional filtering!", status: 400
       end
 
       raise ActiveRecord::RecordNotFound unless @models.any?
