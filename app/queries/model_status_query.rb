@@ -24,10 +24,10 @@ class ModelStatusQuery
         model.genome_model_id AS model_id
       FROM model.model model
       LEFT JOIN (
-         SELECT ROW_NUMBER() OVER (PARTITION BY model_id ORDER BY date_scheduled DESC) AS r, model_id, status
-         FROM model.build
-         WHERE status != 'Abandoned'
-         AND #{first_in_clause}
+        SELECT ROW_NUMBER() OVER (PARTITION BY model_id ORDER BY date_scheduled DESC) AS r, model_id, status
+        FROM model.build
+        WHERE status != 'Abandoned'
+        AND #{first_in_clause}
       ) build
         ON model.genome_model_id = build.model_id
       WHERE #{second_in_clause}
