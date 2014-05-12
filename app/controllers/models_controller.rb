@@ -8,14 +8,15 @@ class ModelsController < ApplicationController
       @models = @models.joins(:analysis_project_model_bridges).where(analysis_project_model_bridge: { analysis_project_id: params[:analysis_project_id] })
     end
     unless params[:status].blank?
-      if params[:analysis_project_id].blank? and params[:id].blank?
-        return render text: "Query by status requires additional filtering.", status: 400
+      if params[:analysis_project_id].blank?
+        return render text: "Query by status requires an analysis project!", status: 400
       end
 
       raise ActiveRecord::RecordNotFound unless @models.any?
-      model_ids = @models.map { |m| m.genome_model_id }
+      model_ids = @models.pluck(:id)
       statuses = ModelStatusQuery.new(model_ids).execute
-      @models = @models.select { |m| statuses.find { |(id,status)| id = m.genome_model_id && status = params[:status] } }
+      statuses = statuses.select { |x| x['status'] == params[:status] }
+      @models = Model.where(id: statuses.map { |x| x['model_id'] })
     end
 
     raise ActiveRecord::RecordNotFound unless @models.any?
