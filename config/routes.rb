@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   get 'analysis_projects/:id' => 'analysis_projects#overview'
   get 'models/:id' => 'models#status', as: 'model_status'
-  get 'models/*ids' => 'models#overview', as: 'model_overview'
+  get 'models' => 'models#overview', as: 'model_overview'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
