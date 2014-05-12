@@ -1,0 +1,27 @@
+.row
+  .container-fluid
+    .row
+      .col-md-10.col-md-offset-1
+        %h1.page-header
+          = @model_group.name
+    .row
+      .col-md-10.col-md-offset-1
+        %h4 Model Group Information
+        .well
+          .col-md-6
+            %dl.dl-horizontal
+              %dt Username:
+              %dd= @model_group.user_name
+          .clearfix
+    .row
+      .col-md-10.col-md-offset-1
+        .col-md-4
+          %h4 Models By Type
+          .well
+            = render partial: 'shared/doughnut_chart', locals: { chart: @model_type_chart }
+        .col-md-4
+          %h4 Models By Status
+          .well
+            = render partial: 'shared/doughnut_chart', locals: { chart: @model_status_chart }
+    .row
+      %br

@@ -1,14 +1,17 @@
 class ModelsController < ApplicationController
   def overview
     query = params.slice(:id, :subclass_name)
-    base_query_params = params.slice(:id, :subclass_name, :analysis_project_id, :status)
+    base_query_params = params.slice(:id, :subclass_name, :analysis_project_id, :status, :model_group_id)
 
     @models = Model.where(query)
     unless params[:analysis_project_id].blank?
       @models = @models.joins(:analysis_project_model_bridges).where(analysis_project_model_bridge: { analysis_project_id: params[:analysis_project_id] })
     end
+    unless params[:model_group_id].blank?
+      @models = @models.joins(:model_group_bridges).where(model_group_bridge: { model_group_id: params[:model_group_id] })
+    end
     unless params[:status].blank?
-      if params[:analysis_project_id].blank? and params[:id].blank?
+      if params[:analysis_project_id].blank? and params[:id].blank? and params[:model_group_id].blank?
         return render text: "Query by status requires additional filtering!", status: 400
       end
 
