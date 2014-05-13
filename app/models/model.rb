@@ -1,5 +1,6 @@
 class Model < ActiveRecord::Base
   self.table_name = 'model.model'
+  self.primary_key = 'genome_model_id'
 
   has_many :builds
   has_many :events
