@@ -31,10 +31,11 @@ class ModelsController < ApplicationController
     @model_type_chart      = ModelTypeChart.new(models_by_type, base_query_params, view_context)
     @model_status_chart    = ModelStatusChart.new(statuses, base_query_params, view_context)
 
-    models_with_status = statuses.each_with_object(@models.each_with_object({}) do |item, hash|
+    @table_items = @models.page(params[:page])
+    models_with_status = statuses.each_with_object(@table_items.each_with_object({}) do |item, hash|
       hash[item.id] = { model: item }
     end) do |status, hash|
-      hash[status['model_id']][:status] = status['status']
+      hash[status['model_id']][:status] = status['status'] if hash.has_key?(status['model_id'])
     end
 
     @model_status_table    = ModelStatusTable.new(models_with_status, view_context())
@@ -45,6 +46,8 @@ class ModelsController < ApplicationController
     builds = @model.builds
 
     @build_status_chart    = BuildStatusChart.new(builds)
-    @build_status_table    = BuildStatusTable.new(builds)
+
+    @table_items = builds.page(params[:page])
+    @build_status_table    = BuildStatusTable.new(@table_items)
   end
 end
