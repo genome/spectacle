@@ -17,10 +17,22 @@
               %dd= @build.status
               %dt Model:
               %dd= link_to(@model.name, model_status_path(id: @model.genome_model_id))
+              %dt Run By:
+              %dd= @build.run_by
+              %dt Date Scheduled:
+              %dd= @build.date_scheduled
+              %dt Date Completed:
+              %dd= @build.date_completed
           .col-md-6
             %h5 Inputs:
             %dl.dl-horizontal
               - @build.build_inputs.each do |input|
                 %dt= input.name
                 %dd= input.value_id
+          .col-md-12
+            %dl.dl-horizontal
+              %dt Data Directory:
+              %dd= @build.data_directory
+              %dt Software Revision:
+              %dd= @build.software_revision
           .clearfix
