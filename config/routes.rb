@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 
-  get 'analysis_projects/:id' => 'analysis_projects#overview'
+  get 'analysis_projects/:id' => 'analysis_projects#overview', as: 'analysis_project_overview'
   get 'models/:id' => 'models#status', as: 'model_status'
   get 'models' => 'models#overview', as: 'model_overview'
   get 'model_groups/:id' => 'model_groups#overview'

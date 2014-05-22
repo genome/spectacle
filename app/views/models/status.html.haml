@@ -12,6 +12,17 @@
           %h4 Builds By Status
           .well
             = render partial: 'shared/doughnut_chart', locals: {chart: @build_status_chart }
+        .col-md-8
+          %h4 Model Information
+          .well
+            %dl.dl-horizontal
+              %dt Created By:
+              %dd= @model.created_by
+              %dt Creation Date:
+              %dd= @model.creation_date
+              -if @analysis_project
+                %dt Analysis Project:
+                %dd= link_to(@analysis_project.name, analysis_project_overview_path(id: @analysis_project.id))
     .row
       .col-md-10.col-md-offset-1
         .well

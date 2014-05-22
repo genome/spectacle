@@ -45,6 +45,8 @@ class ModelsController < ApplicationController
     @model = Model.with_statuses_scope.where(genome_model_id: params[:id]).first!
     builds = @model.builds
 
+    @analysis_project = @model.analysis_projects.first
+
     @build_status_chart    = BuildStatusChart.new(builds)
 
     @table_items = builds.page(params[:page])
