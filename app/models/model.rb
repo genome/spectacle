@@ -10,6 +10,8 @@ class Model < ActiveRecord::Base
   has_many :model_groups, through: :model_group_bridges
   has_many :build_metrics, through: :builds
 
+  belongs_to :processing_profile, inverse_of: :models
+
   def status
   end
 
