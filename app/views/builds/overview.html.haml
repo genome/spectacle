@@ -3,7 +3,10 @@
     .row
       .col-md-10.col-md-offset-1
         %h1.page-header
-          = "Build #{@build.build_id} of #{@model.name}"
+          = "Build #{@build.build_id}"
+          %br
+          %small
+            = "of #{@model.name}"
     .row
       .col-md-10.col-md-offset-1
         %h4 Build Information
