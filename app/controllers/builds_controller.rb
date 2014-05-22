@@ -1,5 +1,5 @@
 class BuildsController < ApplicationController
-  def overview
+  def status
     @build = Build.where(build_id: params[:id]).first!
     @model = @build.model
   end
