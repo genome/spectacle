@@ -2,7 +2,7 @@ class Model < ActiveRecord::Base
   self.table_name = 'model.model'
   self.primary_key = 'genome_model_id'
 
-  has_many :builds
+  has_many :builds, inverse_of: :model
   has_many :events
   has_many :analysis_project_model_bridges
   has_many :analysis_projects, through: :analysis_project_model_bridges
