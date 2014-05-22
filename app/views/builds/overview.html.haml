@@ -1,0 +1,17 @@
+.row
+  .container-fluid
+    .row
+      .col-md-10.col-md-offset-1
+        %h1.page-header
+          = "Build #{@build.build_id} of #{@model.name}"
+    .row
+      .col-md-10.col-md-offset-1
+        %h4 Build Information
+        .well
+          .col-md-6
+            %dl.dl-horizontal
+              %dt Status:
+              %dd= @build.status
+              %dt Model:
+              %dd= link_to(@model.name, model_status_path(id: @model.genome_model_id))
+          .clearfix

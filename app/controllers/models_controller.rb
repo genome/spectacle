@@ -48,6 +48,6 @@ class ModelsController < ApplicationController
     @build_status_chart    = BuildStatusChart.new(builds)
 
     @table_items = builds.page(params[:page])
-    @build_status_table    = BuildStatusTable.new(@table_items)
+    @build_status_table    = BuildStatusTable.new(@table_items, view_context)
   end
 end
