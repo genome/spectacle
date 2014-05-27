@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get 'models' => 'models#overview', as: 'model_overview'
   get 'model_groups/:id' => 'model_groups#overview'
   get 'builds/:id' => 'builds#status', as: 'build_status'
+  get 'processing_profiles/:id' => 'processing_profiles#overview', as: 'processing_profile_overview'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

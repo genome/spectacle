@@ -1,0 +1,21 @@
+.row
+  .container-fluid
+    .row
+      .col-md-10.col-md-offset-1
+        %h1.page-header
+          = @processing_profile.name
+    .row
+      .col-md-10.col-md-offset-1
+        %h4 Processing Profile Information
+        .well
+          .col-md-4
+            %dl.dl-horizontal
+              %dt Type:
+              %dd= @processing_profile.type_name
+          .col-md-8
+            %h5 Parameters:
+            %dl.dl-horizontal
+              - @params.each do |param|
+                %dt= param.param_name
+                %dd= param.param_value
+          .clearfix
