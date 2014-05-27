@@ -1,0 +1,35 @@
+.row
+  .container-fluid
+    .row
+      .col-md-10.col-md-offset-1
+        %h1.page-header
+          = "Software Result #{@software_result.id}"
+    .row
+      .col-md-10.col-md-offset-1
+        %h4 Software Result Information
+        .well
+          .col-md-12
+            %dl.dl-horizontal
+              %dt Output Directory:
+              %dd= @software_result.outputs_path
+              %dt Lookup Hash:
+              %dd= @software_result.lookup_hash
+          .col-md-6
+            %h5 Inputs:
+            %dl.dl-horizontal
+              - @inputs.each do |input|
+                %dt= input.name
+                %dd= input.value_id
+          .col-md-6
+            %h5 Parameters:
+            %dl.dl-horizontal
+              - @params.each do |param|
+                %dt= param.name
+                %dd= param.value_id
+          .col-md-6
+            %h5 Metrics:
+            %dl.dl-horizontal
+              - @metrics.each do |metric|
+                %dt= metric.metric_name
+                %dd= metric.metric_value
+          .clearfix
