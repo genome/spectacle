@@ -6,7 +6,7 @@ class Build < ActiveRecord::Base
   has_many :software_result_users, foreign_key: :user_id
   has_many :software_results, through: :software_result_users
   has_many :build_metrics
-  has_many :build_inputs
+  has_many :build_inputs, inverse_of: :build
 
   belongs_to :model, inverse_of: :builds
 end
