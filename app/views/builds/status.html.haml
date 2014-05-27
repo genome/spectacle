@@ -27,7 +27,7 @@
             %h5 Inputs:
             %dl.dl-horizontal
               - @build.build_inputs.each do |input|
-                %dt= input.name
+                %dt{title: input.name}= input.name
                 %dd= input.value_id
           .col-md-12
             %dl.dl-horizontal
