@@ -20,4 +20,8 @@ class Model < ActiveRecord::Base
   def self.with_statuses_scope
     eager_load([:builds])
   end
+
+  def last_succeeded_build
+    builds.where('status = ?', 'Succeeded').order('date_completed DESC').first
+  end
 end

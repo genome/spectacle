@@ -10,4 +10,11 @@ class ModelGroupsController < ApplicationController
     @model_type_chart      = ModelTypeChart.new(models_by_type, base_query_params, view_context)
     @model_status_chart    = ModelStatusChart.new(statuses, base_query_params, view_context)
   end
+
+  def coverage
+    @model_group = ModelGroup.where(id: params[:id]).first!
+    builds = @model_group.map{|m| m.last_succeeded_build}
+    
+     
+  end
 end
