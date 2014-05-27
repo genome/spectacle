@@ -21,7 +21,7 @@
               %dt Creation Date:
               %dd= @model.creation_date
               %dt Processing Profile:
-              %dd= @model.processing_profile.name
+              %dd= link_to(@model.processing_profile.name, processing_profile_overview_path(id: @model.processing_profile.id))
               -if @analysis_project
                 %dt Analysis Project:
                 %dd= link_to(@analysis_project.name, analysis_project_overview_path(id: @analysis_project.id))
