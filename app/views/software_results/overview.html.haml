@@ -18,18 +18,18 @@
             %h5 Inputs:
             %dl.dl-horizontal
               - @inputs.each do |input|
-                %dt= input.name
+                %dt{title: input.name}= input.name
                 %dd= input.value_id
           .col-md-6
             %h5 Parameters:
             %dl.dl-horizontal
               - @params.each do |param|
-                %dt= param.name
+                %dt{title: param.name}= param.name
                 %dd= param.value_id
           .col-md-6
             %h5 Metrics:
             %dl.dl-horizontal
               - @metrics.each do |metric|
-                %dt= metric.metric_name
+                %dt{title: metric.metric_name}= metric.metric_name
                 %dd= metric.metric_value
           .clearfix
