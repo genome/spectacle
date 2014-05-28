@@ -9,6 +9,6 @@
           .col-md-12
             %dl.dl-horizontal
               - @results.each do |doc|
-                %dt= doc['type'].sub('_',' ').titleize
+                %dt= doc['display_type']
                 %dd= link_to doc['display_title'], doc['url']
           .clearfix
