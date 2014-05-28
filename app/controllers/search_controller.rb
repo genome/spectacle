@@ -35,7 +35,7 @@ class SearchController < ApplicationController
       analysis_project_overview_path id: object_id
     when 'wiki-page'
       result['display_url0']
-    when 'email'
+    when 'mail'
       result['display_url0']
     else
       '#'
