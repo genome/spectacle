@@ -1,0 +1,14 @@
+.row
+  .container-fluid
+    .row
+      .col-md-10.col-md-offset-1
+        %h1.page-header= 'Search: ' + @query
+    .row
+      .col-md-10.col-md-offset-1
+        .well
+          .col-md-12
+            %dl.dl-horizontal
+              - @results.each do |doc|
+                %dt= doc['type'].sub('_',' ').titleize
+                %dd= link_to doc['display_title'], doc['url']
+          .clearfix

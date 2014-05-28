@@ -15,6 +15,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'rouge'
 gem 'kaminari'
 gem 'kaminari-bootstrap', '~> 3.0.1'
+gem 'rsolr'
 
 group :doc do
   gem 'sdoc', '~> 0.4.0', require: false
