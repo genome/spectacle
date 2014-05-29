@@ -10,20 +10,36 @@ class Build < ActiveRecord::Base
   has_many :build_inputs, inverse_of: :build
   belongs_to :model, inverse_of: :builds
 
-  def this_is_clearly_in_the_wrong_place
-    m = self.coverage_metrics_hash  
-    theoretical_max_enrichment_factor  = (100 / ((m['target_total_bp'].metric_value.to_f / m['genome_total_bp'].metric_value.to_f) * 100)).round(1)
-    alignment_v1_unique_on_target_enrichment_factor = (((m['alignment-wingspan_0_unique_target_aligned_bp'].metric_value.to_f / (m['alignment-wingspan_0_total_aligned_bp'].metric_value.to_f + m['alignment-wingspan_0_total_unaligned_bp'].metric_value.to_f)) * 100) / ((m['target_total_bp'].metric_value.to_f / m['genome_total_bp'].metric_value.to_f) * 100)).round(1) 
-    alignemnt_v1_total_on_target_enrichment_factor  = ((((m['alignment-wingspan_0_unique_target_aligned_bp'].metric_value.to_f + m['alignment-wingspan_0_duplicate_target_aligned_bp'].metric_value.to_f) / (m['alignment-wingspan_0_total_aligned_bp'].metric_value.to_f + m['alignment-wingspan_0_total_unaligned_bp'].metric_value.to_f)) * 100) / ((m['target_total_bp'].metric_value.to_f / m['genome_total_bp'].metric_value.to_f) * 100)).round(1)
-    alignment_v2_unique_on_target_enrichment_factor = (((m['alignment-v2-wingspan_0_unique_target_aligned_bp'].metric_value.to_f / (m['alignment-v2-wingspan_0_total_aligned_bp'].metric_value.to_f + m['alignment-v2-wingspan_0_total_unaligned_bp'].metric_value.to_f)) * 100) / ((m['target_total_bp'].metric_value.to_f / m['genome_total_bp'].metric_value.to_f) * 100)).round(1) 
-    alignemnt_v2_total_on_target_enrichment_factor  = ((((m['alignment-v2-wingspan_0_unique_target_aligned_bp'].metric_value.to_f + m['alignment-v2-wingspan_0_duplicate_target_aligned_bp'].metric_value.to_f) / (m['alignment-v2-wingspan_0_total_aligned_bp'].metric_value.to_f + m['alignment-v2-wingspan_0_total_unaligned_bp'].metric_value.to_f)) * 100) / ((m['target_total_bp'].metric_value.to_f / m['genome_total_bp'].metric_value.to_f) * 100)).round(1)
+  def coverage_report_metrics
+    self.coverage_depths_mapping.merge(self.enrichment_hash_mapping).merge(alignment_summary_metrics_mapping)
+
   end
 
-  def coverage_metrics_hash
-    Hash[self.coverage_metrics.collect{|m| [m.metric_name, m]}]
+  def coverage_depths_mapping
+    metric_names = self.coverage_minimum_depths
+    Hash[software_result_metrics.select{|m| metric_names.include?(m.metric_name)}.collect{|m| [/(\d+)_mean_depth/.match(m.metric_name)[1], m.metric_value]}]
   end
 
-  def coverage_metrics
+  def enrichment_hash_mapping
+    m = self.enrichment_metrics_hash  
+    enrichment = Hash.new
+    enrichment['theoretical_max_enrichment_factor'] = (100 / ((m['target_total_bp'].to_f / m['genome_total_bp'].to_f) * 100)).round(1)
+    enrichment['alignment_v1_unique_on_target_enrichment_factor'] = (((m['alignment-wingspan_0_unique_target_aligned_bp'].to_f / (m['alignment-wingspan_0_total_aligned_bp'].to_f + m['alignment-wingspan_0_total_unaligned_bp'].to_f)) * 100) / ((m['target_total_bp'].to_f / m['genome_total_bp'].to_f) * 100)).round(1) 
+    enrichment['alignemnt_v1_total_on_target_enrichment_factor']  = ((((m['alignment-wingspan_0_unique_target_aligned_bp'].to_f + m['alignment-wingspan_0_duplicate_target_aligned_bp'].to_f) / (m['alignment-wingspan_0_total_aligned_bp'].to_f + m['alignment-wingspan_0_total_unaligned_bp'].to_f)) * 100) / ((m['target_total_bp'].to_f / m['genome_total_bp'].to_f) * 100)).round(1)
+    enrichment['alignment_v2_unique_on_target_enrichment_factor'] = (((m['alignment-v2-wingspan_0_unique_target_aligned_bp'].to_f / (m['alignment-v2-wingspan_0_total_aligned_bp'].to_f + m['alignment-v2-wingspan_0_total_unaligned_bp'].to_f)) * 100) / ((m['target_total_bp'].to_f / m['genome_total_bp'].to_f) * 100)).round(1) 
+    enrichment['alignemnt_v2_total_on_target_enrichment_factor']  = ((((m['alignment-v2-wingspan_0_unique_target_aligned_bp'].to_f + m['alignment-v2-wingspan_0_duplicate_target_aligned_bp'].to_f) / (m['alignment-v2-wingspan_0_total_aligned_bp'].to_f + m['alignment-v2-wingspan_0_total_unaligned_bp'].to_f)) * 100) / ((m['target_total_bp'].to_f / m['genome_total_bp'].to_f) * 100)).round(1)
+    enrichment
+  end
+
+  def enrichment_metrics_hash
+    Hash[self.enrichment_metrics.collect{|m| [m.metric_name, m.metric_value]}]
+  end
+
+  def alignment_summary_metrics_mapping
+    Hash[self.alignment_summary_metrics.collect{|m| [m.metric_name, m.metric_value]}]
+  end
+
+  def enrichment_metrics
     metric_names = [
       'genome_total_bp',
       'target_total_bp',
@@ -39,6 +55,24 @@ class Build < ActiveRecord::Base
     software_result_metrics.select{|m| metric_names.include?(m.metric_name)}
   end
 
+  def alignment_summary_metrics
+    metric_names = [
+      'alignment-wingspan_0_total_unaligned_bp',
+      'alignment-v2-wingspan_0_total_unaligned_bp',
+      'alignment-wingspan_0_duplicate_off_target_aligned_bp',
+      'alignment-v2-wingspan_0_duplicate_off_target_aligned_bp',
+      'alignment-wingspan_0_duplicate_target_aligned_bp',
+      'alignment-v2-wingspan_0_duplicate_target_aligned_bp',
+      'alignment-wingspan_0_total_aligned_bp',
+      'alignment-v2-wingspan_0_total_aligned_bp',
+      'alignment-wingspan_0_unique_off_target_aligned_bp',
+      'alignment-wingspan_500_unique_off_target_aligned_bp',
+      'alignment-v2-wingspan_0_unique_off_target_aligned_bp',
+      'alignment-v2-wingspan_500_unique_off_target_aligned_bp',
+    ]
+    software_result_metrics.select{|m| metric_names.include?(m.metric_name)}
+  end
+
   def coverage_software_results
     class_names = [
       'Genome::InstrumentData::AlignmentResult::Merged::CoverageStats',
@@ -48,7 +82,6 @@ class Build < ActiveRecord::Base
   end
 
   def coverage_minimum_depths
-    self.coverage_software_results.map{|r| r.software_result_parameters}.flatten.select{|p| p.name == 'minimum_depths'}
+    self.coverage_software_results.map{|r| r.software_result_parameters}.flatten.select{|p| p.name == 'minimum_depths'}.map{|p| p.param_value.split(',').map{|n| ['coverage-wingspan_0_', n, '_mean_depth'].join('')}}.flatten
   end
-
 end
