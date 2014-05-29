@@ -1,0 +1,5 @@
+%ul.nav.nav-pills
+  -coverage_report_metrics.each do |(build_id, metrics)|
+    %li
+      = render partial: 'model_groups/coverage_report', locals: {build_id: build_id, metrics: metrics }
+  

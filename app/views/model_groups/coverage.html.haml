@@ -1,0 +1,12 @@
+.row
+  .container-fluid
+    .row
+      .col-md-10.col-md-offset-1
+        %h1.page-header
+          = @model_group.name
+    .row
+      .col-md-10.col-md-offset-1
+        .col-md-4
+          %h4 Coverage Report
+          .well
+            =render partial: 'model_groups/coverage_reports', locals: { coverage_report_metrics: @builds_coverage_summary }

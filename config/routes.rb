@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get 'analysis_projects/:id' => 'analysis_projects#overview', as: 'analysis_project_overview'
   get 'models/:id' => 'models#status', as: 'model_status'
   get 'models' => 'models#overview', as: 'model_overview'
+  get 'model_groups/coverage/:id' => 'model_groups#coverage', as: 'model_group_coverage'
   get 'model_groups/:id' => 'model_groups#overview', as: 'model_group_overview'
   get 'builds/:id' => 'builds#status', as: 'build_status'
   get 'processing_profiles/:id' => 'processing_profiles#overview', as: 'processing_profile_overview'

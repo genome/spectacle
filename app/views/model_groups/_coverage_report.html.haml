@@ -1,0 +1,6 @@
+%ul
+  %li
+    = build_id
+  -metrics.each do |(metric_name, metric_value)|
+    %li 
+      = [metric_name, metric_value].join(" : ") 

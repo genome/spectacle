@@ -13,8 +13,7 @@ class ModelGroupsController < ApplicationController
 
   def coverage
     @model_group = ModelGroup.where(id: params[:id]).first!
-    builds = @model_group.map{|m| m.last_succeeded_build}
-    
-     
+    builds = @model_group.models.map{|m| m.last_succeeded_build}
+    @builds_coverage_summary = Hash[builds.collect{|b| [b.id, b.coverage_report_metrics]}]
   end
 end
