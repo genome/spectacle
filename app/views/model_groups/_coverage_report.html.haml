@@ -1,6 +1,7 @@
-%ul
-  %li
-    = build_id
-  -metrics.each do |(metric_name, metric_value)|
-    %li 
-      = [metric_name, metric_value].join(" : ") 
+%h5 
+  =build_id
+.well
+  %dl.dl-horizontal
+    -metrics.each do |(metric_name, metric_value)|
+      %dt= metric_name
+      %dd=  metric_value
