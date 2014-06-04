@@ -1,5 +1,3 @@
-require 'rsolr'
-
 class SearchController < ApplicationController
   def overview
   end
@@ -12,39 +10,8 @@ class SearchController < ApplicationController
     end
 
     page = params[:page] || 1
-    solr = RSolr.connect url: ENV['GENOME_SYS_SERVICES_SOLR']
-    response = solr.paginate page, RESULTS_PER_PAGE, 'select', params: {q: @query}
-
-    @results = response['response']['docs']
-    @results.each do |doc|
-      doc['url'] = url_for_result(doc)
-    end
-
-    @paginatable_results = Kaminari.paginate_array(@results, total_count: response['response']['numFound']).page(page).per(RESULTS_PER_PAGE)
-  end
-
-
-  private
-  def url_for_result(result)
-    object_id = result['object_id']
-
-    case result['type']
-    when 'processing_profile'
-      processing_profile_overview_path id: object_id
-    when /^model(?: |$)/
-      model_status_path id: object_id
-    when 'build'
-      build_status_path id: object_id
-    when 'modelgroup'
-      model_group_overview_path id: object_id
-    when 'analysis_project'
-      analysis_project_overview_path id: object_id
-    when 'wiki-page'
-      result['display_url0']
-    when 'mail'
-      result['display_url0']
-    else
-      '#'
-    end
+    search = Search.search page, RESULTS_PER_PAGE, {q: @query}, view_context
+    @results = search.results
+    @paginatable_results = Kaminari.paginate_array(@results, total_count: search.result_count).page(page).per(RESULTS_PER_PAGE)
   end
 end
