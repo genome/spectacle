@@ -11,4 +11,5 @@
               - @results.each do |doc|
                 %dt= doc['display_type']
                 %dd= link_to doc['display_title'], doc['url']
+            = paginate @paginatable_results
           .clearfix

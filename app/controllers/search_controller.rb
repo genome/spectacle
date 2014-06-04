@@ -4,17 +4,23 @@ class SearchController < ApplicationController
   def overview
   end
 
+  RESULTS_PER_PAGE = 25
   def results
     @query = params[:query]
     unless @query
       redirect_to search_overview_path, status: 303
     end
+
+    page = params[:page] || 1
     solr = RSolr.connect url: ENV['GENOME_SYS_SERVICES_SOLR']
-    response = solr.get 'select', params: {q: @query}
+    response = solr.paginate page, RESULTS_PER_PAGE, 'select', params: {q: @query}
+
     @results = response['response']['docs']
     @results.each do |doc|
       doc['url'] = url_for_result(doc)
     end
+
+    @paginatable_results = Kaminari.paginate_array(@results, total_count: response['response']['numFound']).page(page).per(RESULTS_PER_PAGE)
   end
 
 
