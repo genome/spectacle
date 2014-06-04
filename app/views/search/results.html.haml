@@ -18,6 +18,6 @@
                 Refine Results by Type:
               %ul
                 - @facets.each do |facet|
-                  %li= link_to "#{facet[0]}: #{facet[1]}", url_for(params.merge({type: facet[0], page: 1}))
+                  %li= link_to "#{facet[0]}: #{facet[1]}", url_for(params.merge({type: facet[0]}).except(:page))
                 %li= link_to "All results", url_for(params.except(:type, :page))
           .clearfix
