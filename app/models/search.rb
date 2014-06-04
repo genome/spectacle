@@ -2,6 +2,13 @@ require 'rsolr'
 
 class Search
   def self.search(page,results_per_page,options,view_context)
+
+    if options[:fq]
+      options[:fq] = %Q({!tag=tt}type:\"#{options[:fq]}\")
+      options['facet.field'] = '{!ex=tt}type'
+      options[:facet] = true
+    end
+
     solr = RSolr.connect url: ENV['GENOME_SYS_SERVICES_SOLR']
     response = solr.paginate page, results_per_page, 'select', params: options
     Search.new response, view_context
@@ -13,6 +20,17 @@ class Search
 
   def result_count
     @response['response']['numFound']
+  end
+
+  def facets
+    unless @facets
+      @facets = []
+      @response['facet_counts']['facet_fields']['type'].each_slice(2) do |x,y|
+        @facets << [x,y] if y > 0
+      end
+    end
+
+    @facets
   end
 
   private

@@ -6,10 +6,18 @@
     .row
       .col-md-10.col-md-offset-1
         .well
-          .col-md-12
+          .col-md-8
             %dl.dl-horizontal
               - @results.each do |doc|
                 %dt= doc['display_type']
                 %dd= link_to doc['display_title'], doc['url']
             = paginate @paginatable_results
+          .col-md-4
+            - if @facets.count > 0
+              %h4
+                Refine Results by Type:
+                %ul
+                  - @facets.each do |facet|
+                    %li= link_to "#{facet[0]}: #{facet[1]}", url_for(params.merge({type: facet[0], page: 1}))
+                  %li= link_to "All results", url_for(params.except(:type, :page))
           .clearfix
