@@ -1,28 +1,10 @@
 class ModelsController < ApplicationController
   def overview
-    query = params.slice(:genome_model_id, :subclass_name)
-    base_query_params = params.slice(:genome_model_id, :subclass_name, :analysis_project_id, :status, :model_group_id)
 
-    @models = Model.where(query)
-    unless params[:analysis_project_id].blank?
-      @models = @models.joins(:analysis_project_model_bridges).where(analysis_project_model_bridge: { analysis_project_id: params[:analysis_project_id] })
-    end
-    unless params[:model_group_id].blank?
-      @models = @models.joins(:model_group_bridges).where(model_group_bridge: { model_group_id: params[:model_group_id] })
-    end
-    unless params[:status].blank?
-      if params[:analysis_project_id].blank? and params[:genome_model_id].blank? and params[:model_group_id].blank?
-        return render text: "Query by status requires additional filtering!", status: 400
-      end
-
-      raise ActiveRecord::RecordNotFound unless @models.any?
-      model_ids = @models.pluck(:genome_model_id)
-      statuses = ModelStatusQuery.new(model_ids).execute
-      statuses = statuses.select { |x| x['status'] == params[:status] }
-      @models = Model.where(genome_model_id: statuses.map { |x| x['model_id'] })
-    end
-
+    @models = find_models(params)
     raise ActiveRecord::RecordNotFound unless @models.any?
+
+    base_query_params = params.slice(:genome_model_id, :subclass_name, :analysis_project_id, :status, :model_group_id)
 
     model_ids = @models.map { |model| model.id }
     statuses = ModelStatusQuery.new(model_ids).execute
@@ -51,5 +33,31 @@ class ModelsController < ApplicationController
 
     @table_items = builds.page(params[:page])
     @build_status_table    = BuildStatusTable.new(@table_items, view_context)
+  end
+
+  private
+  def find_models(params)
+    query = params.slice(:genome_model_id, :subclass_name)
+
+    models = Model.where(query)
+    unless params[:analysis_project_id].blank?
+      models = models.joins(:analysis_project_model_bridges).where(analysis_project_model_bridge: { analysis_project_id: params[:analysis_project_id] })
+    end
+    unless params[:model_group_id].blank?
+      models = models.joins(:model_group_bridges).where(model_group_bridge: { model_group_id: params[:model_group_id] })
+    end
+    unless params[:status].blank?
+      if params[:analysis_project_id].blank? and params[:genome_model_id].blank? and params[:model_group_id].blank?
+        return render text: "Query by status requires additional filtering!", status: 400
+      end
+
+      raise ActiveRecord::RecordNotFound unless models.any?
+      model_ids = models.pluck(:genome_model_id)
+      statuses = ModelStatusQuery.new(model_ids).execute
+      statuses = statuses.select { |x| x['status'] == params[:status] }
+      models = Model.where(genome_model_id: statuses.map { |x| x['model_id'] })
+    end
+
+    models
   end
 end
