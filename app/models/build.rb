@@ -2,9 +2,15 @@ class Build < ActiveRecord::Base
   self.table_name = 'model.build'
   self.primary_key = 'build_id'
 
+  COVERAGE_RESULT_CLASS_NAMES = [
+    'Genome::InstrumentData::AlignmentResult::Merged::CoverageStats',
+    'Genome::InstrumentData::AlignmentResult::Merged::RefCov',
+  ]
+
   has_many :events
   has_many :software_result_users, foreign_key: :user_id
   has_many :software_results, through: :software_result_users
+  has_many :coverage_software_results, -> { where(class_name: COVERAGE_RESULT_CLASS_NAMES) }, through: :software_result_users, source: :software_result
   has_many :software_result_metrics, through: :software_results
   has_many :build_metrics
   has_many :build_inputs, inverse_of: :build
@@ -73,15 +79,13 @@ class Build < ActiveRecord::Base
     software_result_metrics.select{|m| metric_names.include?(m.metric_name)}
   end
 
-  def coverage_software_results
-    class_names = [
-      'Genome::InstrumentData::AlignmentResult::Merged::CoverageStats',
-      'Genome::InstrumentData::AlignmentResult::Merged::RefCov',
-    ]
-    software_results.select{|r| class_names.include?(r.class_name)}
-  end
-
   def coverage_minimum_depths
-    self.coverage_software_results.map{|r| r.software_result_parameters}.flatten.select{|p| p.name == 'minimum_depths'}.map{|p| p.param_value.split(',').map{|n| ['coverage-wingspan_0_', n, '_mean_depth'].join('')}}.flatten
+    coverage_software_results
+      .flat_map(&:software_result_parameters)
+      .select{ |p| p.name == 'minimum_depths' }
+      .first
+      .param_value
+      .split(',')
+      .map { |n| "coverage-wingspan_0_#{n}_mean_depth" }
   end
 end
