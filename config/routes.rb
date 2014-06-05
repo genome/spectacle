@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get 'builds/:id' => 'builds#status', as: 'build_status'
   get 'processing_profiles/:id' => 'processing_profiles#overview', as: 'processing_profile_overview'
   get 'software_results/:id' => 'software_results#overview', as: 'software_result_overview'
+  get 'subjects/:id' => 'subjects#overview', as: 'subject_overview'
   get '/search' => 'search#results', as: 'search_results'
   get '/' => 'search#overview', as: 'search_overview'
 

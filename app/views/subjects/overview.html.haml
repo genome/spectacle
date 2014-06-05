@@ -1,0 +1,32 @@
+.row
+  .container-fluid
+    .row
+      .col-md-10.col-md-offset-1
+        %h1.page-header
+          = @subject.name
+    .row
+      .col-md-10.col-md-offset-1
+        %h4 Subject Information
+        .well
+          .col-md-12
+            %table.table.table-striped
+              %thead
+                %tr
+                  %th Label
+                  %th Value
+                  %th Nomenclature
+              %tbody
+                - @attributes.each do |attribute|
+                  %tr
+                    %td= attribute.attribute_label
+                    %td= attribute.attribute_value
+                    %td= attribute.nomenclature
+          .clearfix
+    .row
+      .col-md-10.col-md-offset-1
+        %h4 Models
+        .col-md-12
+          %ul
+            - @models.each do |model|
+              %li= link_to model.name, model_status_path(id: model.genome_model_id)
+          = paginate @models

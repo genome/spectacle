@@ -60,6 +60,8 @@ class Search
       result['display_url0']
     when 'mail'
       result['display_url0']
+    when 'taxon', 'sample', 'population-group', 'individual'
+      view_context.subject_overview_path id: object_id
     else
       '#'
     end
