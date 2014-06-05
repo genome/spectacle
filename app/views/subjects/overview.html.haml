@@ -6,9 +6,9 @@
           = @subject.name
     .row
       .col-md-10.col-md-offset-1
-        %h4 Subject Information
         .well
-          .col-md-12
+          .col-md-8
+            %h4 Subject Information
             %table.table.table-striped
               %thead
                 %tr
@@ -21,6 +21,11 @@
                     %td= attribute.attribute_label
                     %td= attribute.attribute_value
                     %td= attribute.nomenclature
+          .col-md-4
+            %h4 Libraries
+            %ul
+              -@libraries.each do |library|
+                %li= link_to library.full_name, library_overview_path(id: library.library_id)
           .clearfix
     .row
       .col-md-10.col-md-offset-1
