@@ -19,6 +19,8 @@ class ModelsController < ApplicationController
     end
 
     @model_status_table    = ModelStatusTable.new(models_with_status, view_context())
+  rescue InvalidQueryError => error
+    return render text: error.message, status: 422
   end
 
   def status
@@ -46,7 +48,7 @@ class ModelsController < ApplicationController
     end
     unless params[:status].blank?
       if params[:analysis_project_id].blank? and params[:genome_model_id].blank? and params[:model_group_id].blank?
-        return render text: "Query by status requires additional filtering!", status: 400
+        raise InvalidQueryError.new "Query by status requires additional filtering!"
       end
 
       raise ActiveRecord::RecordNotFound unless models.any?
