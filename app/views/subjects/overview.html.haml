@@ -24,8 +24,8 @@
           .clearfix
     .row
       .col-md-10.col-md-offset-1
-        %h4 Models
         .col-md-12
+          %h4 Models
           %ul
             - @models.each do |model|
               %li= link_to model.name, model_status_path(id: model.genome_model_id)

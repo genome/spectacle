@@ -1,0 +1,28 @@
+.row
+  .container-fluid
+    .row
+      .col-md-10.col-md-offset-1
+        %h1.page-header
+          = @library.full_name
+    .row
+      .col-md-10.col-md-offset-1
+        %h4 Library Information
+        .well
+          .col-md-6
+            %dl.dl-horizontal
+              %dt Sample:
+              %dd= link_to @sample.name, subject_overview_path(id: @sample.subject_id)
+              %dt Library Insert Size:
+              %dd= @library.library_insert_size
+              %dt Original Insert Size:
+              %dd= @library.original_insert_size
+          .col-md-6
+            %dl.dl-horizontal
+              %dt Protocol:
+              %dd= @library.protocol
+              %dt Transcript Strand:
+              %dd= @library.transcript_strand
+              %dt Bisulfite Conversion:
+              %dd= @library.bisulfite_conversion
+          .clearfix
+

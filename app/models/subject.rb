@@ -4,4 +4,5 @@ class Subject < ActiveRecord::Base
 
   has_many :models, inverse_of: :subject
   has_many :subject_attributes, inverse_of: :subject
+  has_many :libraries, inverse_of: :subject
 end

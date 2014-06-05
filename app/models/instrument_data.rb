@@ -3,4 +3,6 @@ class InstrumentData < ActiveRecord::Base
 
   has_many :instrument_data_analysis_project_bridges
   has_many :analysis_projects, through: :instrument_data_analysis_project_bridges
+
+  belongs_to: :library, inverse_of: :instrument_data
 end
