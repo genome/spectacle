@@ -1,13 +1,11 @@
 class ModelsController < ApplicationController
   def overview
-
     @models = find_models(params)
     raise ActiveRecord::RecordNotFound unless @models.any?
 
     base_query_params = params.slice(:genome_model_id, :subclass_name, :analysis_project_id, :status, :model_group_id)
 
-    model_ids = @models.map { |model| model.id }
-    statuses = ModelStatusQuery.new(model_ids).execute
+    statuses = ModelStatusQuery.new( @models.map(&:genome_model_id) ).execute
     models_by_type = @models.group_by(&:subclass_name)
 
     @model_type_chart      = ModelTypeChart.new(models_by_type, base_query_params, view_context)
