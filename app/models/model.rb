@@ -9,19 +9,15 @@ class Model < ActiveRecord::Base
   has_many :model_group_bridges
   has_many :model_groups, through: :model_group_bridges
   has_many :build_metrics, through: :builds
-
   belongs_to :subject, inverse_of: :models
-
   belongs_to :processing_profile, inverse_of: :models
+
+  has_one :last_succeeded_build, -> { where(status: 'Succeeded').order('date_completed DESC') }, class_name: 'Build'
 
   def status
   end
 
   def self.with_statuses_scope
     eager_load([:builds])
-  end
-
-  def last_succeeded_build
-    builds.where('status = ?', 'Succeeded').order('date_completed DESC').first
   end
 end
