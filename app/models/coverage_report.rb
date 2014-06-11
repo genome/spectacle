@@ -56,9 +56,8 @@ class CoverageReport
   end
 
   def coverage_depths_hash
-    @build.software_result_metrics.where(metric_name: coverage_minimum_depths)
-      .map { |m| [/(\d+)_mean_depth/.match(m.metric_name)[1], m.metric_value] }
-      .to_h
+    Hash[@build.software_result_metrics.where(metric_name: coverage_minimum_depths)
+      .map { |m| [/(\d+)_mean_depth/.match(m.metric_name)[1], m.metric_value] }]
   end
 
   def calculated_enrichment_metrics_hash
@@ -126,11 +125,11 @@ class CoverageReport
   end
 
   def enrichment_metrics_hash
-    @build.enrichment_metrics.map{ |m| [m.metric_name, m.metric_value] }.to_h
+    Hash[@build.enrichment_metrics.map{ |m| [m.metric_name, m.metric_value] }]
   end
 
   def alignment_summary_metrics_hash
-    @build.alignment_summary_metrics.map{ |m| [m.metric_name, m.metric_value] }.to_h
+    Hash[@build.alignment_summary_metrics.map{ |m| [m.metric_name, m.metric_value] }]
   end
 
   def coverage_minimum_depths
