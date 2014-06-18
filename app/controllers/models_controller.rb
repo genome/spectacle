@@ -3,9 +3,7 @@ class ModelsController < ApplicationController
     @models = ModelFilter.filter_query(Model.where(true), params)
     base_query_params = params.slice(*ModelFilter.filterable_params)
 
-    unless @models.any?
-      raise ActiveRecord::RecordNotFound unless @models.any?
-    end
+    raise ActiveRecord::RecordNotFound unless @models.any?
 
     models_by_type = @models.group_by(&:subclass_name)
     statuses = ModelStatusQuery.new( @models.pluck(:genome_model_id) ).execute
