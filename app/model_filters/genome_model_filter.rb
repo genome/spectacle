@@ -1,7 +1,7 @@
 class GenomeModelFilter
   include ModelFilter
 
-  def filter(rel, val)
+  def self.filter(rel, val)
     rel.where(genome_model_id: val)
   end
 
