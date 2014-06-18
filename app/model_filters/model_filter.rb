@@ -10,7 +10,7 @@ module ModelFilter
 
   def self.model_filters
     #this particular filter has to go last. hardcoded hack :(
-    @sorted_model_filters ||= @model_filters.reject { |f| f == ModelStatusFilter } << ModelStatusFilter
+    @sorted_model_filters ||= @model_filters.reject { |f| f == ModelStatusFilter } + @model_filters.select { |f| f ==  ModelStatusFilter }
   end
 
   def self.filter_query(relation, params)
