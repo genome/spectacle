@@ -15,21 +15,12 @@ module ModelFilter
 
   def self.filter_query(relation, params)
     model_filters.inject(relation) do |rel, filter|
-      val = clean_param(params[filter.param])
+      val = params[filter.param]
       if val.blank?
         rel
       else
         filter.filter(rel, val)
       end
-    end
-  end
-
-  private
-  def self.clean_param(param)
-    if param
-      param.strip
-    else
-      param
     end
   end
 end
