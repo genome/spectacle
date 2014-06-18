@@ -15,7 +15,7 @@ class ModelGroupsController < ApplicationController
     @model_group = ModelGroup.eager_load(models: [:last_succeeded_build])
       .where(id: params[:id])
       .first!
-    builds = @model_group.models.map{|m| m.last_succeeded_build.id }
+    builds = @model_group.models.map{|m| m.last_succeeded_build }.compact.map(&:id)
     @builds_coverage_summary = {}
     CoverageReport.from_build_ids(builds).map do |coverage_report|
       @builds_coverage_summary[coverage_report.build_id] = coverage_report.coverage_report_metrics

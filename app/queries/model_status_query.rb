@@ -1,6 +1,6 @@
 class ModelStatusQuery
-  def initialize(model_ids)
-    @query = build_query(Array(model_ids))
+  def initialize(model_ids, statuses = [])
+    @query = build_query(Array(model_ids), Array(statuses))
   end
 
   def execute
@@ -8,13 +8,19 @@ class ModelStatusQuery
   end
 
   private
-  def build_query(model_ids)
+  def build_query(model_ids, statuses)
     first_in_clause = ActiveRecord::Base.send(:sanitize_sql_array, ['build.model_id IN (?)', model_ids])
     second_in_clause = ActiveRecord::Base.send(:sanitize_sql_array, ['model.genome_model_id IN (?)', model_ids])
-    query(first_in_clause, second_in_clause)
+    status_clause = if statuses.empty?
+                      '1=1'
+                    else
+                      ActiveRecord::Base.send(:sanitize_sql_array, ['status IN (?)', statuses])
+                    end
+
+    base_query(first_in_clause, second_in_clause, status_clause)
   end
 
-  def query(first_in_clause, second_in_clause)
+  def base_query(first_in_clause, second_in_clause, status_clause)
     %{
       SELECT
         CASE WHEN model.build_requested THEN 'Build Requested'
@@ -31,7 +37,8 @@ class ModelStatusQuery
       ) build
         ON model.genome_model_id = build.model_id
       WHERE #{second_in_clause}
-      AND (build.r = 1 OR build.r IS NULL);
+      AND (build.r = 1 OR build.r IS NULL)
+      AND #{status_clause};
     }
   end
 end
