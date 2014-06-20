@@ -6,7 +6,12 @@
           = @analysis_project.name
     .row
       .col-md-10.col-md-offset-1
-        %h4 Project Information
+        %h4
+          Project Information
+          -if @analysis_project.is_cle
+            .pull-right
+              %span.label.label-warning
+                CLE
         .well
           .col-md-6
             %dl.dl-horizontal
