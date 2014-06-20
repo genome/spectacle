@@ -15,5 +15,9 @@ class AnalysisProjectsController < ApplicationController
     @model_status_chart    = ModelStatusChart.new(statuses, base_query_params, view_context)
     @config_presenter      = AnalysisProjectConfigPresenter.new(@analysis_project)
     @instrument_data_chart = InstrumentDataChart.new(inst_data_bridges)
+
+    @timeline              = TimelinePresenter.new @analysis_project.timeline_events
+                                                     .order("updated_at DESC")
+                                                     .limit(25)
   end
 end

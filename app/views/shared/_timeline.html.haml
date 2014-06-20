@@ -1,0 +1,3 @@
+#timeline
+  - timeline.each_day do |day, month, events|
+    = render partial: 'shared/timeline_day', locals: { day: day, month: month, events: events }

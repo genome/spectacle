@@ -1,0 +1,35 @@
+.row.timeline-movement
+  .timeline-badge
+    %span.timeline-balloon-date-day
+      = day
+    %span.timeline-balloon-date-month
+      = month
+  -events.each_slice(2) do |((first_event_type, first_events), (second_event_type, second_events))|
+    -if first_event_type
+      .col-sm-6.timeline-item
+        .row
+          .col-sm-11
+            .timeline-panel.left-col
+              %ul.timeline-panel-ul
+                %li
+                  %span.importo= first_event_type
+                -first_events.each do |event|
+                  %li
+                    %span.causale
+                      = event.reason
+                      %small.text-muted
+                        = event.timestamp
+    -if second_event_type
+      .col-sm-6.timeline-item
+        .row
+          .col-sm-offset-1.col-sm-11
+            .timeline-panel.right-col
+              %ul.timeline-panel-ul
+                %li
+                  %span.importo= second_event_type
+                -second_events.each do |event|
+                  %li
+                    %span.causale
+                      = event.reason
+                      %small.text-muted
+                        = event.timestamp
