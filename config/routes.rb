@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   # root 'welcome#index'
 
   get 'analysis_projects/:id' => 'analysis_projects#overview', as: 'analysis_project_overview'
+  get 'analysis_projects/:id/timeline' => 'timelines#analysis_project', as: 'analysis_project_timeline'
   get 'models/:id' => 'models#status', as: 'model_status'
   get 'models' => 'models#overview', as: 'model_overview'
   get 'model_groups/coverage/:id' => 'model_groups#coverage', as: 'model_group_coverage'

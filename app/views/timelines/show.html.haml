@@ -1,0 +1,14 @@
+.row
+  .container-fluid
+    .row
+      .col-md-10.col-md-offset-1
+        %h1.page-header
+          %a{href: @back_link_path}
+            = "#{@object.name} (#{@object.class.to_s.titleize})"
+          %small timeline
+    .row
+      .col-md-10.col-md-offset-1
+        = render partial: 'shared/timeline', locals: { timeline: @timeline }
+    .row
+      .col-md-10.col-md-offset-1
+        = paginate @events

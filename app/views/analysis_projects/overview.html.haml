@@ -53,5 +53,8 @@
       %br
     .row
       .col-md-10.col-md-offset-1
-        %h4 Timeline Events
+        %h4
+          Timeline Events
+          %small
+            %a{href: analysis_project_timeline_path(@analysis_project)} View all
         = render partial: 'shared/timeline', locals: { timeline: @timeline }
