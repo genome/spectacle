@@ -36,7 +36,6 @@ class EventPresenter < SimpleDelegator
 
   def timestamp
     @timestamp ||= @event.updated_at
-      .in_time_zone('Central Time (US & Canada)')
       .strftime('%I:%M%P')
   end
 end
