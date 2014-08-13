@@ -20,4 +20,10 @@ class AnalysisProjectsController < ApplicationController
                                                      .order("updated_at DESC")
                                                      .limit(25)
   end
+
+  def failed_instrument_data
+    @analysis_project = AnalysisProject.where(id: params[:id]).first!
+    @failed_bridges = InstrumentDataAnalysisProjectBridge.where(status: 'failed', analysis_project: @analysis_project)
+    @unique_reasons = @failed_bridges.group_by(&:reason)
+  end
 end

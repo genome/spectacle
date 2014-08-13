@@ -4,9 +4,11 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
+  root 'search#overview', as: 'search_overview'
 
   get 'analysis_projects/:id' => 'analysis_projects#overview', as: 'analysis_project_overview'
   get 'analysis_projects/:id/timeline' => 'timelines#analysis_project', as: 'analysis_project_timeline'
+  get 'analysis_projects/:id/failed_instrument_data' => 'analysis_projects#failed_instrument_data', as: 'analysis_project_failed_instrument_data'
   get 'models/:id' => 'models#status', as: 'model_status'
   get 'models' => 'models#overview', as: 'model_overview'
   get 'model_groups/coverage/:id' => 'model_groups#coverage', as: 'model_group_coverage'
@@ -17,7 +19,6 @@ Rails.application.routes.draw do
   get 'subjects/:id' => 'subjects#overview', as: 'subject_overview'
   get 'libraries/:id' => 'libraries#overview', as: 'library_overview'
   get '/search' => 'search#results', as: 'search_results'
-  get '/' => 'search#overview', as: 'search_overview'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

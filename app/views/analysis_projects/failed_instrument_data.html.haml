@@ -1,0 +1,19 @@
+.row
+  .container-fluid
+    .row
+      .col-md-10.col-md-offset-1
+        %h1.page-header
+          = link_to @analysis_project.name, analysis_project_overview_path(@analysis_project)
+          %small failed instrument data
+    .row
+      .col-md-10.col-md-offset-1
+        %h3 Unique Failure Reasons
+        %ul
+          - @unique_reasons.each do |(reason, items)|
+            %li= "#{reason} (#{items.count})"
+    .row
+      .col-md-10.col-md-offset-1
+        %h3 All Failed Instrument Data
+        %ul
+          - @failed_bridges.each do |bridge|
+            %li= "#{bridge.instrument_data_id} (#{bridge.reason})"

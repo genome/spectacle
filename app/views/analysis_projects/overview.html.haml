@@ -37,6 +37,7 @@
           %h4 Instrument Data
           .well
             = render partial: 'shared/doughnut_chart', locals: { chart: @instrument_data_chart }
+            = link_to 'Failed Instrument Data', analysis_project_failed_instrument_data_path(@analysis_project)
         .col-md-4
           %h4 Models By Type
           .well
