@@ -4,6 +4,8 @@ class ConfigProfileItem < ActiveRecord::Base
   belongs_to :analysis_project
   belongs_to :analysis_menu_item, foreign_key: :analysismenu_item_id
   has_one :allocation, foreign_key: :owner_id
+  has_many :tag_config_profile_item_bridges, foreign_key: :profile_item_id
+  has_many :tags, through: :tag_config_profile_item_bridges
 
   def file_path
     if concrete?
