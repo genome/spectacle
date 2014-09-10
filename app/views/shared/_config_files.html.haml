@@ -1,13 +1,20 @@
 %ul.nav.nav-pills
   - active = 'active'
-  - config_files.each do |(file, _)|
+  - config_files.each do |(id, file, _, _)|
     %li{class: active}
-      %a{href: "##{file}", data: {toggle: 'tab'}}= file
+      %a{href: "##{id}", data: {toggle: 'tab'}}= file
     - active = ''
 
 .tab-content
   - active = 'active'
-  - config_files.each do |(file, contents)|
-    .tab-pane{id: file, class: active}
+  - config_files.each do |(id, file, contents, tags)|
+    .tab-pane{id: id, class: active}
       - active = ''
-      = contents
+      - unless tags.empty?
+        %h4 Tags
+        %div
+          %ul.list-unstyled
+            -tags.each do |tag|
+              %li=tag
+      %h4 Config
+      %div= contents

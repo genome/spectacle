@@ -7,16 +7,18 @@ class AnalysisProjectConfigPresenter
   end
 
   def expected_models
-    @config.flat_map { |(_, c)| c['models'].keys }
+    @config.flat_map { |(_, _, c, _)| c['models'].keys }
       .uniq
       .map { |model| model.sub('Genome::Model::','') }
   end
 
   def config_files_markup
-    @config.map do |(file_path, data)|
+    @config.map do |(id, file_path, data, tags)|
       [
+        id,
         File.basename(file_path, '.yml'),
-        get_highlighted_markup(data.to_yaml)
+        get_highlighted_markup(data.to_yaml),
+        tags
       ]
     end
   end
@@ -25,11 +27,15 @@ class AnalysisProjectConfigPresenter
   def get_file_paths
     @file_paths ||= @analysis_project.config_profile_items
       .includes(:allocation, :analysis_menu_item)
-      .map { |item| item.file_path }
+      .map { |item| [item.id, item.file_path] }
   end
 
   def read_config_files
-    get_file_paths.map { |path| [path, YAML.load_file(path)] }
+    get_file_paths.map { |(id, path)| [id, path, YAML.load_file(path), tag_names(id)] }
+  end
+
+  def tag_names(item_id)
+    @analysis_project.config_profile_items.includes(:tags).select{|x| x.id == item_id }.first.tags.map {|tag| tag.name }
   end
 
   def get_highlighted_markup(text)
