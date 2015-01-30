@@ -1,4 +1,5 @@
 json.id @build.id
+json.model @build.model_id
 json.status @build.status
 json.run_by @build.run_by
 json.date_scheduled @build.date_scheduled
