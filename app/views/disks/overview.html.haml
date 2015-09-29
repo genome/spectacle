@@ -1,0 +1,9 @@
+.header
+ = javascript_include_tag "//www.google.com/jsapi" 
+ = javascript_include_tag "application", "chartkick"
+.row
+ = pie_chart Allocation.group(:disk_group_name).sum(:kilobytes_requested)
+.row
+ = bar_chart Allocation.group(:disk_group_name).order('sum_kilobytes_requested DESC').sum(:kilobytes_requested)
+.row
+ = bar_chart Allocation.limit(10).group(:owner_class_name).order('sum_kilobytes_requested DESC').sum(:kilobytes_requested)
