@@ -16,7 +16,7 @@ gem 'rouge'
 gem 'kaminari'
 gem 'kaminari-bootstrap', '~> 3.0.1'
 gem 'rsolr'
-
+gem 'chartkick'
 group :doc do
   gem 'sdoc', '~> 0.4.0', require: false
 end

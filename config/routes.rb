@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get 'model_groups/:id' => 'model_groups#overview', as: 'model_group_overview'
   get 'builds/:id' => 'builds#status', as: 'build_status'
   get 'processing_profiles/:id' => 'processing_profiles#overview', as: 'processing_profile_overview'
+  get 'disks' => 'disks#overview', as: 'disk_overview'
   get 'software_results/:id' => 'software_results#overview', as: 'software_result_overview'
   get 'subjects/:id' => 'subjects#overview', as: 'subject_overview'
   get 'libraries/:id' => 'libraries#overview', as: 'library_overview'
