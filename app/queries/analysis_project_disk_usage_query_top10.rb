@@ -10,7 +10,8 @@ class AnalysisProjectDiskUsageQueryTop10
       GROUP BY sr.id
       )  counts ON sr.id = counts.software_result_id
       INNER JOIN disk.allocation da ON da.owner_id = sr.id
-      GROUP BY sru.user_id
+      WHERE da.status = 'active'
+      GROUP BY sru.user_id      
       ORDER BY usage DESC
       LIMIT 10;}
   end

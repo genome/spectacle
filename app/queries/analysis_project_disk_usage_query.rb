@@ -11,7 +11,8 @@ class AnalysisProjectDiskUsageQuery
       AND #{analysis_project_id_clause}
       GROUP BY sr.id
       )  counts ON sr.id = counts.software_result_id
-      INNER JOIN disk.allocation da ON da.owner_id = sr.id;}      
+      INNER JOIN disk.allocation da ON da.owner_id = sr.id
+      WHERE da.status = 'active';}      
     ActiveRecord::Base.connection.execute(@query)
   end 
 end

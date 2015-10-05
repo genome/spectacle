@@ -24,6 +24,11 @@
           = bar_chart @owner_class_sum_rename
     .row
       .col-md-16.col-md-offset-1      
+        %h4 Usage by Owner Class Active
+        .well
+          = bar_chart @owner_class_status_sum
+    .row
+      .col-md-16.col-md-offset-1      
         %h4 Usage by Sponsor
         .well
           = bar_chart @disk_sponsor_result_hash
