@@ -19,6 +19,8 @@ class AnalysisProjectsController < ApplicationController
     @timeline              = TimelinePresenter.new @analysis_project.timeline_events
                                                      .order("updated_at DESC")
                                                      .limit(25)
+    
+    @analysis_project_disk_usage = AnalysisProjectDiskUsageQuery.new.execute(params[:id])
   end
 
   def failed_instrument_data
