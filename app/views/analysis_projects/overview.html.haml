@@ -25,7 +25,7 @@
               %dd= @model_status_chart.total_items
               %br
               %dt Disk Usage (Tb):
-              %dd= @analysis_project_disk_usage.to_a[0]['usage'].to_i/(1024*1024*1024)
+              %dd= @analysis_project_disk_usage
           .col-md-6
             %dl.dl-horizontal
               %dt Expected Model Types:

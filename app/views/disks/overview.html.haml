@@ -15,21 +15,21 @@
         .col-md-6
           %h4 Usage by Disk Group and Status 
           .well
-            = column_chart  @disk_group_status_sum
+            = column_chart  @disk_group_status_sum, {library: {hAxis: {title: "Disk Group"}, vAxis: {title: "TB"}}}
     .clearfix
     .row
       .col-md-16.col-md-offset-1      
         %h4 Usage by Owner Class
         .well
-          = bar_chart @owner_class_sum_rename
+          = bar_chart @owner_class_sum_rename, {library: {vAxis: {title: "Owner Class Name"}, hAxis: {title: "TB"}}}
     .row
       .col-md-16.col-md-offset-1      
-        %h4 Usage by Owner Class Active
+        %h4 Usage by Owner Class and Status
         .well
-          = bar_chart @owner_class_status_sum
+          = bar_chart @owner_class_status_sum, {library: {vAxis: {title: "Owner Class Name"}, hAxis: {title: "TB"}}} 
     .row
       .col-md-16.col-md-offset-1      
         %h4 Usage by Sponsor
         .well
-          = bar_chart @disk_sponsor_result_hash
+          = bar_chart @disk_sponsor_result_hash, {library: {vAxis: {title: "Sponsor Name"}, hAxis: {title: "KB"}}}
       %br

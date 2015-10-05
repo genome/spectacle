@@ -19,8 +19,9 @@ class AnalysisProjectsController < ApplicationController
     @timeline              = TimelinePresenter.new @analysis_project.timeline_events
                                                      .order("updated_at DESC")
                                                      .limit(25)
-    
-    @analysis_project_disk_usage = AnalysisProjectDiskUsageQuery.new.execute(params[:id])
+    @analysis_project_disk_usage = Rails.cache.fetch("analysis project disk usage query" + params[:id]) do
+     AnalysisProjectDiskUsageQuery.new.execute(params[:id]).to_a[0]['usage'].to_i/(1024*1024*1024)
+    end
   end
 
   def failed_instrument_data
