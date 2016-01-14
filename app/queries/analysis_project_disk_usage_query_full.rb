@@ -12,8 +12,7 @@ class AnalysisProjectDiskUsageQueryFull
       INNER JOIN disk.allocation da ON da.owner_id = sr.id
       WHERE da.status = 'active'
       GROUP BY sru.user_id      
-      ORDER BY usage DESC
-      LIMIT 10;}
+      ORDER BY usage DESC;}
   end
   def execute
     ActiveRecord::Base.connection.execute(@query)
