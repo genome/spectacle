@@ -7,7 +7,7 @@ class AnalysisProjectConfigPresenter
   end
 
   def expected_models
-    @config.flat_map { |(_, _, c, _)| c['models'].keys }
+    @config.flat_map { |(_, _, c, _)| c['models'].present? ? c['models'].keys : [] }
       .uniq
       .map { |model| model.sub('Genome::Model::','') }
   end

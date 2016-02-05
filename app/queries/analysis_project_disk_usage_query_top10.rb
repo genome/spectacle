@@ -1,4 +1,4 @@
-class AnalysisProjectDiskUsageQueryFull
+class AnalysisProjectDiskUsageQueryTop10
   def initialize
     @query = %{SELECT sru.user_id,SUM(da.kilobytes_requested / counts.num_users) usage
       FROM result."user" sru

@@ -21,7 +21,7 @@ class DisksController < ApplicationController
     end
     @disk_sponsor_result_hash_full = Rails.cache.fetch('disk sponsor result hash full') do
     hash = {}
-    AnalysisProjectDiskUsageQuery.new.execute.each_row { |(id, usage)| hash[id] = usage }; hash
+    AnalysisProjectDiskUsageQueryFull.new.execute.each_row { |(id, usage)| hash[id] = usage }; hash
     end
   end
 end
