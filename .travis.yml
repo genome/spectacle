@@ -4,8 +4,8 @@ script:
   - bundle exec rake db:migrate
   - bundle exec rake spec
 rvm:
-  - "1.9.3"
-  - "2.1.0"
+  - "2.3.1"
+  - "2.1.10"
 env:
   - RAILS_ENV=test TRAVIS_BUILD=true
 notifications:
