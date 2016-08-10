@@ -2,6 +2,7 @@
   %thead
     %tr
       %th ID
+      %th Date
       %th Status
       %th Name
   %tbody
@@ -9,6 +10,8 @@
     %tr
       %td
         = link_to(item.id, item.uri)
+      %td
+        = item.date
       %td.text-center
         = item.status
       %td
