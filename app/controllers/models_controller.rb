@@ -7,7 +7,7 @@ class ModelsController < ApplicationController
 
     models_by_type = @models.group_by(&:subclass_name)
     statuses = ModelStatusQuery.new( @models.pluck(:genome_model_id) ).execute
-    @table_items = @models.page(params[:page])
+    @table_items = @models.order(:creation_date).page(params[:page])
 
     model_status_hash = @table_items.each_with_object({}) do |item, hash|
       hash[item.id] = { model: item }
@@ -26,7 +26,7 @@ class ModelsController < ApplicationController
 
   def status
     @model = Model.with_statuses_scope.where(genome_model_id: params[:id]).first!
-    builds = @model.builds
+    builds = @model.builds.order(:created_at)
 
     @analysis_project = @model.analysis_projects.first
 
