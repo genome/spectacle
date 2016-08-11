@@ -7,7 +7,7 @@
     .row
       .col-md-10.col-md-offset-1
         %h4
-          Project Information
+          Analysis Project Information
           -if @analysis_project.is_cle
             .pull-right
               %span.label.label-warning
@@ -15,6 +15,8 @@
         .well
           .col-md-6
             %dl.dl-horizontal
+              %dt ID:
+              %dd= @analysis_project.id
               %dt Status:
               %dd= @analysis_project.status
               %br
