@@ -31,7 +31,11 @@ class AnalysisProjectConfigPresenter
   end
 
   def read_config_files
-    get_file_paths.map { |(id, path)| [id, path, YAML.load_file(path), tag_names(id)] }
+    get_file_paths.map { |(id, path)| [id, path, load_yaml(path), tag_names(id)] }
+  end
+
+  def load_yaml(path)
+    YAML.load_file(path) rescue 'Unable to read file'
   end
 
   def tag_names(item_id)
