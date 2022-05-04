@@ -7,6 +7,9 @@ default: &default
   database: <%= ENV['TGI_POSTGRES_DB'] %>
   username: <%= ENV['TGI_POSTGRES_USER'] %>
   password: <%= ENV['TGI_POSTGRES_PASSWORD'] %>
+  sslcert: <%= ENV['TGI_POSTGRES_SSLCERT'] %>
+  sslkey: <%= ENV['TGI_POSTGRES_SSLKEY'] %>
+  sslrootcert: <%= ENV['TGI_POSTGRES_SSLROOTCERT'] %>
 
 development:
   <<: *default
