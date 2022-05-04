@@ -1,24 +1,26 @@
 source 'https://rubygems.org'
 
 
-gem 'rails', '4.1.3'
+gem 'rails'
 gem 'pg'
 gem 'haml'
-gem 'sass-rails', '~> 4.0.3'
-gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.0.0'
+gem 'sass-rails'
+gem 'uglifier'
+gem 'coffee-rails'
 gem 'therubyracer',  platforms: :ruby
 gem 'jquery-rails'
 gem "less-rails"
-gem "twitter-bootstrap-rails", github: 'seyhunak/twitter-bootstrap-rails', branch: 'bootstrap3'
-gem 'jbuilder', '~> 2.0'
+gem "twitter-bootstrap-rails"
+gem "font-awesome-less"
+gem 'jbuilder'
 gem 'rouge'
 gem 'kaminari'
-gem 'kaminari-bootstrap', '~> 3.0.1'
+gem 'kaminari-bootstrap'
 gem 'rsolr'
 gem 'chartkick'
+gem 'sprockets', '~> 3.0'
 group :doc do
-  gem 'sdoc', '~> 0.4.0', require: false
+  gem 'sdoc', require: false
 end
 
 group :development do
