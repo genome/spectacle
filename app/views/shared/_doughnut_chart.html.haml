@@ -17,4 +17,4 @@
   elem.height = elem.width * 0.5;
   var ctx = elem.getContext("2d");
   var chart = new Chart(ctx);
-  chart.Doughnut(#{chart.data}, #{chart.options});
+  chart.Doughnut(#{raw chart.data}, #{raw chart.options});

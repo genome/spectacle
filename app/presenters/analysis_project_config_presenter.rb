@@ -13,7 +13,7 @@ class AnalysisProjectConfigPresenter
   end
 
   def config_files_markup
-    @config.map do |(id, file_path, data, tags)|
+    @config.select { |x| x[1].present? }.map do |(id, file_path, data, tags)|
       [
         id,
         File.basename(file_path, '.yml'),
