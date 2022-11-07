@@ -1,6 +1,6 @@
 class ModelsController < ApplicationController
   def overview
-    @models = ModelFilter.filter_query(Model.where(true), params)
+    @models = ModelFilter.filter_query(Model.all, params)
     base_query_params = params.slice(*ModelFilter.filterable_params)
 
     raise ActiveRecord::RecordNotFound unless @models.any?

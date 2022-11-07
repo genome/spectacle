@@ -13,7 +13,7 @@ class ModelTypeChart < DoughnutChart
       ChartItem.new(
         type, models.count,
         @@color_list[index] || '#666666',
-        model_overview_path(@base_query_params.merge({subclass_name: type}))
+        model_overview_path(@base_query_params.permit!.merge({subclass_name: type}))
       )
     end
   end

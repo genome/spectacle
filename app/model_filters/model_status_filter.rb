@@ -2,7 +2,7 @@ class ModelStatusFilter
   include ModelFilter
 
   def self.filter(rel, val)
-    if rel.values.empty? || rel.values[:where].reject { |c| c == true }.empty?
+    if rel.values.empty?
       raise InvalidQueryError.new 'Find by status requires additional filtering!'
     end
     filtered_model_ids = rel.pluck(:genome_model_id)
