@@ -4,6 +4,11 @@ class ModelTypeChart < DoughnutChart
   def initialize(data_items, base_query_params, view_context)
     @view_context = view_context
     @base_query_params = base_query_params
+
+    if @base_query_params.respond_to?(:permit)
+      @base_query_params.permit!
+    end
+
     super('Model Type', get_chart_items(data_items))
   end
 
@@ -13,7 +18,7 @@ class ModelTypeChart < DoughnutChart
       ChartItem.new(
         type, models.count,
         @@color_list[index] || '#666666',
-        model_overview_path(@base_query_params.permit!.merge({subclass_name: type}))
+        model_overview_path(@base_query_params.merge({subclass_name: type}))
       )
     end
   end
